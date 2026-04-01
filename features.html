@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nextage — Project Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="css/styles.css" rel="stylesheet" />
+</head>
+<body>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<div id="header"></div>
+
+<section id="features">
+  <p class="section-eyebrow reveal">// 03 — Features</p>
+  <h2 class="section-title reveal">핵심 기능</h2>
+  <div class="features-grid reveal">
+    <div class="feature-card">
+      <div class="feature-num">F — 01</div>
+      <div class="feature-icon">🔐</div>
+      <div class="feature-title">이중 회원 시스템</div>
+      <div class="feature-desc">업체·고객 완전 분리 가입/로그인. Spring Security 이중 FilterChain, BCrypt 암호화, 실시간 중복 검사, 세션 즉시 갱신.</div>
+      <div class="feature-tags">
+        <span class="feature-tag">BUSER</span>
+        <span class="feature-tag">CUSER</span>
+        <span class="feature-tag">BADMIN</span>
+        <span class="feature-tag">CADMIN</span>
+      </div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-num">F — 02</div>
+      <div class="feature-icon">🛡</div>
+      <div class="feature-title">Interceptor 접근 제어</div>
+      <div class="feature-desc">RoleRedirectInterceptor로 로그인 상태에서 반대 영역 URL 직접 접근 차단. ROLE_B 여부로 업체/고객 판별 후 리다이렉트.</div>
+      <div class="feature-tags">
+        <span class="feature-tag">preHandle</span>
+        <span class="feature-tag">SecurityContext</span>
+      </div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-num">F — 03</div>
+      <div class="feature-icon">📋</div>
+      <div class="feature-title">의뢰 게시판</div>
+      <div class="feature-desc">4개 카테고리 이미지 카드 UI, 클라이언트 사이드 필터링, 다중 태그, 첨부파일 업로드, 상태 흐름 관리.</div>
+      <div class="feature-tags">
+        <span class="feature-tag">OPEN</span>
+        <span class="feature-tag">SELECTED</span>
+        <span class="feature-tag">PAID</span>
+        <span class="feature-tag">COMPLETED</span>
+      </div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-num">F — 04</div>
+      <div class="feature-icon">💰</div>
+      <div class="feature-title">역경매 입찰 시스템</div>
+      <div class="feature-desc">4단계 스텝 위자드, 희망가 95% 이상 제한, 최저가 경쟁, 업체당 1회 제한, 최대 3개 업체 비교 모달, 동시성 제어.</div>
+      <div class="feature-tags">
+        <span class="feature-tag">경쟁입찰</span>
+        <span class="feature-tag">FOR UPDATE</span>
+        <span class="feature-tag">업체비교</span>
+      </div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-num">F — 05</div>
+      <div class="feature-icon">💳</div>
+      <div class="feature-title">포트원 v2 결제</div>
+      <div class="feature-desc">사전 주문 생성 → 포트원 결제창 → 금액 검증 → 재고 차감 → 장바구니 삭제 (트랜잭션). 취소 시 환불 API 자동 호출.</div>
+      <div class="feature-tags">
+        <span class="feature-tag">KakaoePay</span>
+        <span class="feature-tag">금액검증</span>
+        <span class="feature-tag">@Transactional</span>
+      </div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-num">F — 06</div>
+      <div class="feature-icon">🏪</div>
+      <div class="feature-title">KIT SHOP + 장바구니</div>
+      <div class="feature-desc">페이지네이션 (9개/page), 정렬 기능, 대표 이미지 2개 + 상세 이미지, 장바구니 수량 수정 / 단건·선택 삭제 REST API.</div>
+      <div class="feature-tags">
+        <span class="feature-tag">REST API</span>
+        <span class="feature-tag">재고관리</span>
+      </div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-num">F — 07</div>
+      <div class="feature-icon">💬</div>
+      <div class="feature-title">실시간 WebSocket 채팅</div>
+      <div class="feature-desc">STOMP 기반 1:1 채팅방, 업체 수락 시 자동 생성, 미읽음 수 실시간 배지, 이미지 첨부, BADMIN 전체 채팅방 열람.</div>
+      <div class="feature-tags">
+        <span class="feature-tag">STOMP</span>
+        <span class="feature-tag">SimpMessaging</span>
+      </div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-num">F — 08</div>
+      <div class="feature-icon">📊</div>
+      <div class="feature-title">정산 & 배송 관리</div>
+      <div class="feature-desc">배송완료 시 정산 자동 생성 (수수료 10%). BUSER 본인 정산, BADMIN 전체 정산 조회. 배송 상태 숫자 코드(0→2→4→9) 관리.</div>
+      <div class="feature-tags">
+        <span class="feature-tag">수수료10%</span>
+        <span class="feature-tag">자동정산</span>
+      </div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-num">F — 09</div>
+      <div class="feature-icon">📅</div>
+      <div class="feature-title">일정 & 포트폴리오</div>
+      <div class="feature-desc">수락된 주문 기반 캘린더 일정 자동 생성, 마감일 충돌 감지 API. 업체 포트폴리오·경력·리뷰 공개/비공개 관리.</div>
+      <div class="feature-tags">
+        <span class="feature-tag">캘린더</span>
+        <span class="feature-tag">충돌감지</span>
+        <span class="feature-tag">포트폴리오</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="js/scripts.js"></script>
+</body>
+</html>

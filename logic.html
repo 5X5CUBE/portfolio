@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nextage — Project Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="css/styles.css" rel="stylesheet" />
+</head>
+<body>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<div id="header"></div>
+
+<section class="logic-section" id="logic">
+  <h2 class="section-title reveal">로직 흐름</h2>
+
+  <div class="logic-tabs reveal">
+    <button class="logic-tab active" onclick="switchTab(this, 'bid')">역경매 낙찰</button>
+    <button class="logic-tab" onclick="switchTab(this, 'payment')">결제 처리</button>
+    <button class="logic-tab" onclick="switchTab(this, 'interceptor')">Interceptor</button>
+    <button class="logic-tab" onclick="switchTab(this, 'settlement')">정산</button>
+  </div>
+
+  <!-- 역경매 낙찰 -->
+  <div class="logic-content active" id="tab-bid">
+    <div class="logic-flow">
+      <div class="logic-step">
+        <div class="logic-step-dot"></div>
+        <div class="logic-step-num">01</div>
+        <div class="logic-step-body">
+          <div class="logic-step-title">업체가 의뢰글에 입찰 제안 등록</div>
+          <div class="logic-step-desc">희망가격의 95% 이상 & 기존 최저가 이하 조건 검증. 동일 업체 중복 입찰 방지. 4단계 스텝 위자드 UI.</div>
+        </div>
+      </div>
+      <div class="logic-step">
+        <div class="logic-step-dot"></div>
+        <div class="logic-step-num">02</div>
+        <div class="logic-step-body">
+          <div class="logic-step-title">고객이 최대 3개 업체 비교 모달 조회</div>
+          <div class="logic-step-desc">가격·예상완료일·A/S·설명 나란히 비교. 최저가 업체 자동 강조(👑 최저가 배지). 업체 포트폴리오 이동 링크.</div>
+        </div>
+      </div>
+      <div class="logic-step">
+        <div class="logic-step-dot"></div>
+        <div class="logic-step-num">03</div>
+        <div class="logic-step-body">
+          <div class="logic-step-title">고객이 원하는 업체 선정 클릭</div>
+          <div class="logic-step-desc">치수 입력(Step 1) → 최종 확인(Step 2: 의뢰정보·업체제안·배송지 표시) → 결제 동의.</div>
+        </div>
+      </div>
+      <div class="logic-step">
+        <div class="logic-step-dot"></div>
+        <div class="logic-step-num">04</div>
+        <div class="logic-step-body">
+          <div class="logic-step-title">포트원 결제 완료 후 서버 금액 검증</div>
+          <div class="logic-step-desc">DB 저장 금액과 결제 금액 비교. 불일치 시 FAILED 처리 및 실패 응답 반환.</div>
+        </div>
+      </div>
+      <div class="logic-step">
+        <div class="logic-step-dot"></div>
+        <div class="logic-step-num">05</div>
+        <div class="logic-step-body">
+          <div class="logic-step-title">트랜잭션 — 낙찰 일괄 처리</div>
+          <div class="logic-step-desc">SELECT FOR UPDATE 동시성 제어 → bid SELECTED + 나머지 bid REJECTED + request PAID + dimensions(치수) 저장 — 원자적 처리.</div>
+        </div>
+      </div>
+      <div class="logic-step">
+        <div class="logic-step-dot"></div>
+        <div class="logic-step-num">06</div>
+        <div class="logic-step-body">
+          <div class="logic-step-title">업체 수락 시 채팅방 자동 생성</div>
+          <div class="logic-step-desc">accept_status = ACCEPTED → chat_room 자동 생성 → request.status = SELECTED → 고객·업체 1:1 채팅 시작.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 결제 처리 -->
+  <div class="logic-content" id="tab-payment">
+    <div class="logic-flow">
+      <div class="logic-step">
+        <div class="logic-step-dot"></div>
+        <div class="logic-step-num">01</div>
+        <div class="logic-step-body">
+          <div class="logic-step-title">사전 주문 생성 (Order Pre-create)</div>
+          <div class="logic-step-desc">ORDER_YYYYMMDDHHMMSS_XXXX 형식의 주문번호 발급. orders 테이블에 READY 상태로 저장.</div>
+        </div>
+      </div>
+      <div class="logic-step">
+        <div class="logic-step-dot"></div>
+        <div class="logic-step-num">02</div>
+        <div class="logic-step-body">
+          <div class="logic-step-title">포트원 v2 결제창 호출</div>
+          <div class="logic-step-desc">Browser SDK로 카카오페이 등 결제창 호출. 결제 취소 시 처리 없이 반환.</div>
+        </div>
+      </div>
+      <div class="logic-step">
+        <div class="logic-step-dot"></div>
+        <div class="logic-step-num">03</div>
+        <div class="logic-step-body">
+          <div class="logic-step-title">서버 측 금액 검증 (Verify)</div>
+          <div class="logic-step-desc">impUid + orderNo + totalAmount 서버 전달 → DB 저장 금액과 대조. 불일치 시 FAILED 처리.</div>
+        </div>
+      </div>
+      <div class="logic-step">
+        <div class="logic-step-dot"></div>
+        <div class="logic-step-num">04</div>
+        <div class="logic-step-body">
+          <div class="logic-step-title">트랜잭션 — 결제 완료 처리</div>
+          <div class="logic-step-desc">payment_status = PAID 업데이트 → order_items 저장 → kit 재고 차감 → 장바구니 삭제 — 원자적 처리.</div>
+        </div>
+      </div>
+      <div class="logic-step">
+        <div class="logic-step-dot"></div>
+        <div class="logic-step-num">05</div>
+        <div class="logic-step-body">
+          <div class="logic-step-title">취소/거절 시 자동 환불</div>
+          <div class="logic-step-desc">포트원 v2 Cancel API (Bearer Auth) 호출 → 성공 시 DB payment_status = CANCELLED 업데이트.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interceptor -->
+  <div class="logic-content" id="tab-interceptor">
+    <div class="logic-flow">
+      <div class="logic-step">
+        <div class="logic-step-dot"></div>
+        <div class="logic-step-num">01</div>
+        <div class="logic-step-body">
+          <div class="logic-step-title">HTTP 요청 → Spring Security FilterChain</div>
+          <div class="logic-step-desc">Business FilterChain(Order=1): /business/**, /auth/business/** 담당. Customer FilterChain(Order=2): 나머지 전체 담당. 비로그인 접근은 Security가 차단.</div>
+        </div>
+      </div>
+      <div class="logic-step">
+        <div class="logic-step-dot"></div>
+        <div class="logic-step-num">02</div>
+        <div class="logic-step-body">
+          <div class="logic-step-title">RoleRedirectInterceptor.preHandle() 실행</div>
+          <div class="logic-step-desc">SecurityContextHolder에서 Authentication 객체 추출. 비로그인(anonymousUser)이면 통과 처리.</div>
+        </div>
+      </div>
+      <div class="logic-step">
+        <div class="logic-step-dot"></div>
+        <div class="logic-step-num">03</div>
+        <div class="logic-step-body">
+          <div class="logic-step-title">권한명으로 업체/고객 판별</div>
+          <div class="logic-step-desc">getAuthorities()에서 ROLE_B로 시작하는 권한이 있으면 업체(isBusiness=true), 없으면 고객(isBusiness=false).</div>
+        </div>
+      </div>
+      <div class="logic-step">
+        <div class="logic-step-dot"></div>
+        <div class="logic-step-num">04</div>
+        <div class="logic-step-body">
+          <div class="logic-step-title">반대 영역 URL 접근 시 차단</div>
+          <div class="logic-step-desc">업체가 /customer/** 접근 → /business/main?accessDenied=true 리다이렉트. 고객이 /business/** 접근 → /customer/main?accessDenied=true 리다이렉트.</div>
+        </div>
+      </div>
+      <div class="logic-step">
+        <div class="logic-step-dot"></div>
+        <div class="logic-step-num">05</div>
+        <div class="logic-step-body">
+          <div class="logic-step-title">공용 허용 경로 예외 처리</div>
+          <div class="logic-step-desc">/customer/request/**: 업체도 의뢰 열람 허용. /business/portfolio/**: 고객도 포트폴리오 열람 허용. 정적 리소스(/css, /js, /images)는 WebConfig에서 제외.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 정산 -->
+  <div class="logic-content" id="tab-settlement">
+    <div class="logic-flow">
+      <div class="logic-step">
+        <div class="logic-step-dot"></div>
+        <div class="logic-step-num">01</div>
+        <div class="logic-step-body">
+          <div class="logic-step-title">업체가 배송완료 처리</div>
+          <div class="logic-step-desc">deliveryStatus = 4 (배송완료) 로 변경 요청. POST /business/order/delivery/{orderId} 호출.</div>
+        </div>
+      </div>
+      <div class="logic-step">
+        <div class="logic-step-dot"></div>
+        <div class="logic-step-num">02</div>
+        <div class="logic-step-body">
+          <div class="logic-step-title">주문 완료 시각 기록</div>
+          <div class="logic-step-desc">orders.due_date = 현재 시각으로 업데이트. 실제 완료일 자동 기록.</div>
+        </div>
+      </div>
+      <div class="logic-step">
+        <div class="logic-step-dot"></div>
+        <div class="logic-step-num">03</div>
+        <div class="logic-step-body">
+          <div class="logic-step-title">의뢰 상태 COMPLETE 처리</div>
+          <div class="logic-step-desc">bid → request_id 조회 후 request.status = COMPLETE 업데이트.</div>
+        </div>
+      </div>
+      <div class="logic-step">
+        <div class="logic-step-dot"></div>
+        <div class="logic-step-num">04</div>
+        <div class="logic-step-body">
+          <div class="logic-step-title">정산 자동 생성 (중복 방지)</div>
+          <div class="logic-step-desc">settlement 테이블에 해당 orderId 존재 여부 확인 후 없을 때만 생성. 매출액 / 수수료(10%) / 정산액(90%) 자동 계산 후 저장.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="js/scripts.js"></script>
+</body>
+</html>
