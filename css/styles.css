@@ -66,7 +66,6 @@ body::before {
 
 /* ── 네비 ── */
 nav {
-  position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 100;
   display: flex;
@@ -79,15 +78,27 @@ nav {
   box-shadow: 0 2px 20px rgba(79,110,242,0.06);
 }
 
-.nav-logo {
-  font-family: 'Syne', sans-serif;
-  font-size: 1.4rem;
-  font-weight: 800;
-  letter-spacing: -0.04em;
-  color: var(--text);
-  text-decoration: none;
+.header {
+  padding: 20px 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
-.nav-logo span { color: var(--accent); }
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+}
+
+
+.header-right {
+  font-size: 14px;
+}
+
+
+
 
 .nav-links {
   display: flex;
@@ -104,6 +115,67 @@ nav {
   font-family: 'JetBrains Mono', monospace;
 }
 .nav-links a:hover { color: var(--accent); }
+
+/* ── 프로필 섹션 ── */
+.profile-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 120px 0;
+}
+
+/* 박스 */
+.profile-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+
+  background: var(--card);
+  border: 1px solid var(--border2);
+  border-radius: 20px;
+  padding: 40px 60px;
+
+  box-shadow: var(--shadow);
+}
+
+/* 이미지 (200x200) */
+.profile-image {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+
+  background: var(--accent-light);
+  border: 2px solid var(--border);
+
+  /* 테스트용 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--accent);
+  font-size: 0.8rem;
+
+  /* 
+  사진넣을예정
+   background: url('../img/profile.jpg') center/cover no-repeat;
+  */
+}
+
+/* 텍스트 */
+.profile-text {
+  text-align: center;
+}
+
+.profile-text h2 {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.8rem;
+  margin-bottom: 8px;
+}
+
+.profile-text p {
+  color: var(--text2);
+  font-size: 1.2rem;
+}
 
 /* ── 히어로 ── */
 .hero {
