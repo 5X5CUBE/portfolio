@@ -158,10 +158,9 @@ nav {
   color: var(--accent);
   font-size: 0.8rem;
 
-  /* 
-  사진넣을예정
-   background: url('../img/profile.jpg') center/cover no-repeat;
-  */
+  
+   background: url('/img/you.png') center/cover no-repeat;
+ 
 }
 
 /* 텍스트 */
